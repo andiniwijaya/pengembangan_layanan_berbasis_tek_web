@@ -8,12 +8,6 @@ final class ImageAssets
 
     public const PLACEHOLDER_AVATAR = 'images/placeholders/avatar.jpg';
 
-    public const BANNER_HERO_1 = 'images/banners/hero-1.jpg';
-
-    public const BANNER_HERO_2 = 'images/banners/hero-2.jpg';
-
-    public const BANNER_HERO_3 = 'images/banners/hero-3.jpg';
-
     public static function placeholderProduct(): string
     {
         return asset(self::PLACEHOLDER_PRODUCT);

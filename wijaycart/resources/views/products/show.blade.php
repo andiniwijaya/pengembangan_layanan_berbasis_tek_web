@@ -89,41 +89,47 @@
                 </div>
 
                 @auth
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                        <form action="{{ route('cart.store') }}" method="POST" class="flex flex-1 items-center gap-3"
-                            data-add-to-cart data-ajax="true">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <label for="quantity" class="sr-only">Jumlah pembelian</label>
-                            <div class="flex items-center rounded-xl border border-border dark:border-dark-border">
-                                <button type="button" id="qty-minus"
-                                    class="px-3 py-3 hover:bg-secondary dark:hover:bg-dark-border" aria-label="Kurangi jumlah">
-                                    <i data-lucide="minus" class="h-4 w-4"></i>
+                    @if (auth()->user()->isCustomer())
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+                            <form action="{{ route('cart.store') }}" method="POST" class="flex flex-1 items-center gap-3"
+                                data-add-to-cart data-ajax="true">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <label for="quantity" class="sr-only">Jumlah pembelian</label>
+                                <div class="flex items-center rounded-xl border border-border dark:border-dark-border">
+                                    <button type="button" id="qty-minus"
+                                        class="px-3 py-3 hover:bg-secondary dark:hover:bg-dark-border" aria-label="Kurangi jumlah">
+                                        <i data-lucide="minus" class="h-4 w-4"></i>
+                                    </button>
+                                    <input type="number" id="quantity" name="quantity" value="1" min="1"
+                                        max="{{ max(1, $product->stock) }}"
+                                        class="w-16 border-x border-border bg-transparent py-3 text-center text-sm font-semibold dark:border-dark-border"
+                                        @disabled(!$product->isInStock())>
+                                    <button type="button" id="qty-plus"
+                                        class="px-3 py-3 hover:bg-secondary dark:hover:bg-dark-border" aria-label="Tambah jumlah"
+                                        @disabled(!$product->isInStock())>
+                                        <i data-lucide="plus" class="h-4 w-4"></i>
+                                    </button>
+                                </div>
+                                <button type="submit" class="btn-accent flex-1" @disabled(!$product->isInStock())>
+                                    <i data-lucide="shopping-cart" class="h-4 w-4"></i>
+                                    {{ $product->isInStock() ? 'Tambah ke Keranjang' : 'Stok Habis' }}
                                 </button>
-                                <input type="number" id="quantity" name="quantity" value="1" min="1"
-                                    max="{{ max(1, $product->stock) }}"
-                                    class="w-16 border-x border-border bg-transparent py-3 text-center text-sm font-semibold dark:border-dark-border"
-                                    @disabled(!$product->isInStock())>
-                                <button type="button" id="qty-plus"
-                                    class="px-3 py-3 hover:bg-secondary dark:hover:bg-dark-border" aria-label="Tambah jumlah"
-                                    @disabled(!$product->isInStock())>
-                                    <i data-lucide="plus" class="h-4 w-4"></i>
+                            </form>
+                            <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="btn-secondary px-5 py-3 {{ $inWishlist ? 'border-danger text-danger' : '' }}"
+                                    aria-label="Wishlist">
+                                    <i data-lucide="heart" class="h-4 w-4 {{ $inWishlist ? 'fill-current' : '' }}"></i>
                                 </button>
-                            </div>
-                            <button type="submit" class="btn-accent flex-1" @disabled(!$product->isInStock())>
-                                <i data-lucide="shopping-cart" class="h-4 w-4"></i>
-                                {{ $product->isInStock() ? 'Tambah ke Keranjang' : 'Stok Habis' }}
-                            </button>
-                        </form>
-                        <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
-                            @csrf
-                            <button type="submit"
-                                class="btn-secondary px-5 py-3 {{ $inWishlist ? 'border-danger text-danger' : '' }}"
-                                aria-label="Wishlist">
-                                <i data-lucide="heart" class="h-4 w-4 {{ $inWishlist ? 'fill-current' : '' }}"></i>
-                            </button>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    @elseif (auth()->user()->isAdmin())
+                        <a href="{{ route('admin.products.edit', $product) }}" class="btn-secondary inline-flex">
+                            <i data-lucide="pencil" class="h-4 w-4"></i> Kelola Produk di Admin
+                        </a>
+                    @endif
                 @else
                     <a href="{{ route('login') }}" class="btn-accent inline-flex">Login untuk Membeli</a>
                 @endauth

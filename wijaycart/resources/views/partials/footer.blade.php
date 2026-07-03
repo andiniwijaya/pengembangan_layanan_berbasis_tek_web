@@ -9,7 +9,7 @@
                     <span class="text-lg font-bold text-accent dark:text-primary">WijayCart</span>
                 </div>
                 <p class="max-w-sm text-sm leading-relaxed text-text/70 dark:text-dark-muted">
-                    Destinasi lifestyle modern dengan nuansa warm minimalist. Temukan produk home living, stationery, coffee, dan lebih banyak lagi.
+                    Destinasi lifestyle modern dengan nuansa warm minimalist. Temukan produk home living, home decor, dan mug.
                 </p>
             </div>
 

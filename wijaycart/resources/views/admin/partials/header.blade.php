@@ -30,17 +30,6 @@
         </div>
 
         <div class="flex shrink-0 items-center gap-1 sm:gap-2">
-            <a href="{{ route('dashboard') }}"
-                class="hidden rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary sm:inline-flex dark:text-dark-muted dark:hover:bg-dark-border"
-                data-tooltip-target="tooltip-admin-notif" data-tooltip-placement="bottom" aria-label="Notifikasi">
-                <i data-lucide="bell" class="h-5 w-5" aria-hidden="true"></i>
-            </a>
-            <div id="tooltip-admin-notif" role="tooltip"
-                class="tooltip invisible absolute z-50 inline-block rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity duration-300 dark:bg-dark-border">
-                Notifikasi
-                <div class="tooltip-arrow" data-popper-arrow></div>
-            </div>
-
             <button id="dark-mode-toggle" type="button"
                 class="rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
                 data-tooltip-target="tooltip-admin-theme" data-tooltip-placement="bottom" aria-label="Ganti mode gelap">

@@ -50,27 +50,33 @@
             </a>
 
             @auth
-                <div class="flex gap-2">
-                    <form action="{{ route('cart.store') }}" method="POST" class="flex-1" data-add-to-cart
-                        data-ajax="true">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <input type="hidden" name="quantity" value="1">
-                        <button type="submit"
-                            class="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-xs font-semibold text-accent transition-all hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
-                            @disabled(!$product->isInStock())>
-                            <i data-lucide="shopping-cart" class="h-3.5 w-3.5"></i> Keranjang
-                        </button>
-                    </form>
-                    <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
-                        @csrf
-                        <button type="submit"
-                            class="rounded-xl border border-border p-2.5 transition-all hover:border-danger hover:text-danger dark:border-dark-border {{ $inWishlist ? 'bg-danger/10 text-danger border-danger/30' : 'text-text/60 dark:text-dark-muted' }}"
-                            aria-label="{{ $inWishlist ? 'Hapus dari wishlist' : 'Tambah ke wishlist' }}">
-                            <i data-lucide="heart" class="h-4 w-4 {{ $inWishlist ? 'fill-current' : '' }}"></i>
-                        </button>
-                    </form>
-                </div>
+                @if (auth()->user()->isCustomer())
+                    <div class="flex gap-2">
+                        <form action="{{ route('cart.store') }}" method="POST" class="flex-1" data-add-to-cart
+                            data-ajax="true">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit"
+                                class="flex w-full items-center justify-center gap-1.5 rounded-xl bg-primary py-2.5 text-xs font-semibold text-accent transition-all hover:bg-primary-dark hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+                                @disabled(!$product->isInStock())>
+                                <i data-lucide="shopping-cart" class="h-3.5 w-3.5"></i> Keranjang
+                            </button>
+                        </form>
+                        <form action="{{ route('wishlist.toggle', $product) }}" method="POST">
+                            @csrf
+                            <button type="submit"
+                                class="rounded-xl border border-border p-2.5 transition-all hover:border-danger hover:text-danger dark:border-dark-border {{ $inWishlist ? 'bg-danger/10 text-danger border-danger/30' : 'text-text/60 dark:text-dark-muted' }}"
+                                aria-label="{{ $inWishlist ? 'Hapus dari wishlist' : 'Tambah ke wishlist' }}">
+                                <i data-lucide="heart" class="h-4 w-4 {{ $inWishlist ? 'fill-current' : '' }}"></i>
+                            </button>
+                        </form>
+                    </div>
+                @elseif (auth()->user()->isAdmin())
+                    <a href="{{ route('admin.products.edit', $product) }}" class="btn-secondary w-full py-2.5 text-xs text-center">
+                        <i data-lucide="pencil" class="h-3.5 w-3.5"></i> Kelola Produk
+                    </a>
+                @endif
             @else
                 <a href="{{ route('login') }}" class="btn-primary w-full py-2.5 text-xs text-center">Login untuk Beli</a>
             @endauth

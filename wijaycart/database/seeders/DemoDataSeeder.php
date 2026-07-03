@@ -30,7 +30,7 @@ class DemoDataSeeder extends Seeder
     public function run(): void
     {
         $customer = User::where('email', 'customer@wijaycart.com')->first();
-        $product = Product::where('slug', 'ceramic-minimalist-mug')->first()
+        $product = Product::where('slug', 'floral-ceramic-mug')->first()
             ?? Product::first();
 
         if (! $customer || ! $product) {

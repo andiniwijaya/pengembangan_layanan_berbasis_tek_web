@@ -112,8 +112,7 @@ Admin panel: **http://localhost:8000/admin**
 Letakkan foto asli pada folder berikut sebelum menjalankan aplikasi:
 
 ```text
-public/images/banners/       → hero-1.jpg, hero-2.jpg, hero-3.jpg
-public/images/products/      → satu file per produk (lihat database/seeders/data/catalog.php)
+public/images/products/      → satu file .webp per produk (lihat database/seeders/data/catalog.php)
 public/images/placeholders/  → product.jpg, avatar.jpg
 ```
 

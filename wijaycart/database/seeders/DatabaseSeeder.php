@@ -34,16 +34,9 @@ class DatabaseSeeder extends Seeder
         User::factory(8)->create();
 
         $categories = [
-            ['name' => 'Home Living', 'slug' => 'home-living', 'description' => 'Produk untuk mempercantik rumah Anda dengan gaya minimalis dan hangat.'],
-            ['name' => 'Stationery', 'slug' => 'stationery', 'description' => 'Alat tulis dan perlengkapan kantor estetik untuk produktivitas.'],
-            ['name' => 'Coffee', 'slug' => 'coffee', 'description' => 'Perlengkapan kopi premium untuk pengalaman brewing terbaik.'],
-            ['name' => 'Organizer', 'slug' => 'organizer', 'description' => 'Solusi penyimpanan rapi untuk ruang kerja dan rumah.'],
-            ['name' => 'Home Decor', 'slug' => 'home-decor', 'description' => 'Dekorasi rumah modern dengan nuansa warm minimalist.'],
-            ['name' => 'Tumbler', 'slug' => 'tumbler', 'description' => 'Tumbler stylish untuk gaya hidup aktif sehari-hari.'],
-            ['name' => 'Mug', 'slug' => 'mug', 'description' => 'Mug keramik premium dengan desain elegan.'],
-            ['name' => 'Planner', 'slug' => 'planner', 'description' => 'Planner dan journal untuk merencanakan hari dengan lebih baik.'],
-            ['name' => 'Notebook', 'slug' => 'notebook', 'description' => 'Notebook berkualitas untuk menulis ide dan catatan.'],
-            ['name' => 'Mini Plant', 'slug' => 'mini-plant', 'description' => 'Tanaman mini dan pot dekoratif untuk ruangan.'],
+            ['name' => 'Home Living', 'slug' => 'home-living', 'description' => 'Tekstil, penyimpanan, dan pencahayaan untuk rumah yang hangat dan fungsional.'],
+            ['name' => 'Home Decor', 'slug' => 'home-decor', 'description' => 'Dekorasi rumah estetik — vas, lilin, rak dinding, dan aksen handmade.'],
+            ['name' => 'Mug', 'slug' => 'mug', 'description' => 'Mug keramik, kaca, dan travel mug untuk menemani setiap momen.'],
         ];
 
         foreach ($categories as $categoryData) {

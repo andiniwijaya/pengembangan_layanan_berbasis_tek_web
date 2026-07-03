@@ -1,4 +1,4 @@
-{{-- Hero carousel Flowbite dengan overlay teks, CTA, auto-slide, dan swipe mobile --}}
+{{-- Hero carousel tanpa gambar — gradient Scandinavian + ikon dekoratif --}}
 <section class="relative overflow-hidden bg-gradient-to-br from-secondary via-background to-primary/20 dark:from-dark-card dark:via-dark-bg dark:to-primary/10">
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         <div id="hero-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="5000" role="region" aria-label="Banner promosi WijayCart" aria-roledescription="carousel">
@@ -6,13 +6,12 @@
                 @foreach($heroSlides as $index => $slide)
                 <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out" data-carousel-item="{{ $index === 0 ? 'active' : '' }}">
                     <div class="relative aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9] max-h-[560px] w-full">
-                        <img
-                            src="{{ $slide['image'] }}"
-                            alt="{{ $slide['alt'] }}"
-                            class="absolute inset-0 h-full w-full object-cover"
-                            loading="{{ $index === 0 ? 'eager' : 'lazy' }}"
-                        >
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br {{ $slide['gradient'] }} dark:from-dark-card dark:via-dark-border dark:to-primary/20"></div>
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.35),transparent_50%)]"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
+                        <div class="pointer-events-none absolute right-8 top-1/2 hidden -translate-y-1/2 opacity-20 lg:block" aria-hidden="true">
+                            <i data-lucide="{{ $slide['icon'] }}" class="h-48 w-48 text-white"></i>
+                        </div>
                         <div class="absolute inset-0 flex items-center">
                             <div class="animate-slide-up max-w-xl px-6 py-8 sm:px-10 lg:px-14">
                                 <span class="mb-3 inline-flex items-center gap-2 rounded-full bg-primary/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">

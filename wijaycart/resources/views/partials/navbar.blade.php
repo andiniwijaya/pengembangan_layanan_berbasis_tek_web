@@ -14,7 +14,11 @@
                     <a href="{{ route('home') }}" class="nav-link">Beranda</a>
                     <a href="{{ route('products.index') }}" class="nav-link">Katalog</a>
                     @auth
-                        <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+                        @if (auth()->user()->isCustomer())
+                            <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+                        @elseif (auth()->user()->isAdmin())
+                            <a href="{{ route('admin.dashboard') }}" class="nav-link">Panel Admin</a>
+                        @endif
                     @endauth
                 </div>
             </div>
@@ -39,91 +43,92 @@
                 </button>
 
                 @auth
-                    <a href="{{ route('wishlist.index') }}"
-                        class="relative rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
-                        aria-label="Wishlist{{ $wishlistCount > 0 ? ', ' . $wishlistCount . ' produk' : '' }}">
-                        <i data-lucide="heart" class="h-5 w-5" aria-hidden="true"></i>
-                        @if ($wishlistCount > 0)
-                            <span
-                                class="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-danger text-[10px] font-bold text-white"
-                                aria-hidden="true">{{ $wishlistCount }}</span>
-                        @endif
-                    </a>
-
-                    <a href="{{ route('cart.index') }}"
-                        class="relative rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
-                        aria-label="Keranjang{{ $cartCount > 0 ? ', ' . $cartCount . ' produk' : '' }}">
-                        <i data-lucide="shopping-cart" class="h-5 w-5" aria-hidden="true"></i>
-                        @if ($cartCount > 0)
-                            <span id="navbar-cart-count"
-                                class="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
-                                aria-hidden="true">{{ $cartCount }}</span>
-                        @else
-                            <span id="navbar-cart-count"
-                                class="absolute -right-0.5 -top-0.5 hidden h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
-                                aria-hidden="true">0</span>
-                        @endif
-                    </a>
-
-                    {{-- Notifikasi --}}
-                    <div class="relative">
-                        <button id="notification-menu-button" data-dropdown-toggle="notification-dropdown" type="button"
+                    @if (auth()->user()->isCustomer())
+                        <a href="{{ route('wishlist.index') }}"
                             class="relative rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
-                            aria-label="Notifikasi{{ ($unreadNotificationCount ?? 0) > 0 ? ', ' . $unreadNotificationCount . ' belum dibaca' : '' }}">
-                            <i data-lucide="bell" class="h-5 w-5" aria-hidden="true"></i>
-                            @if (($unreadNotificationCount ?? 0) > 0)
-                                <span class="absolute right-1 top-1 h-2 w-2 rounded-full bg-danger"
-                                    aria-hidden="true"></span>
+                            aria-label="Wishlist{{ $wishlistCount > 0 ? ', ' . $wishlistCount . ' produk' : '' }}">
+                            <i data-lucide="heart" class="h-5 w-5" aria-hidden="true"></i>
+                            @if ($wishlistCount > 0)
+                                <span
+                                    class="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-danger text-[10px] font-bold text-white"
+                                    aria-hidden="true">{{ $wishlistCount }}</span>
                             @endif
-                        </button>
-                        <div id="notification-dropdown"
-                            class="z-50 hidden w-72 divide-y divide-border rounded-xl border border-border bg-card shadow-lg dark:divide-dark-border dark:border-dark-border dark:bg-dark-card">
-                            <div class="flex items-center justify-between px-4 py-3">
-                                <div>
-                                    <p class="text-sm font-semibold">Notifikasi</p>
+                        </a>
+
+                        <a href="{{ route('cart.index') }}"
+                            class="relative rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
+                            aria-label="Keranjang{{ $cartCount > 0 ? ', ' . $cartCount . ' produk' : '' }}">
+                            <i data-lucide="shopping-cart" class="h-5 w-5" aria-hidden="true"></i>
+                            @if ($cartCount > 0)
+                                <span id="navbar-cart-count"
+                                    class="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
+                                    aria-hidden="true">{{ $cartCount }}</span>
+                            @else
+                                <span id="navbar-cart-count"
+                                    class="absolute -right-0.5 -top-0.5 hidden h-4 w-4 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
+                                    aria-hidden="true">0</span>
+                            @endif
+                        </a>
+
+                        <div class="relative">
+                            <button id="notification-menu-button" data-dropdown-toggle="notification-dropdown" type="button"
+                                class="relative rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
+                                aria-label="Notifikasi{{ ($unreadNotificationCount ?? 0) > 0 ? ', ' . $unreadNotificationCount . ' belum dibaca' : '' }}">
+                                <i data-lucide="bell" class="h-5 w-5" aria-hidden="true"></i>
+                                @if (($unreadNotificationCount ?? 0) > 0)
+                                    <span class="absolute right-1 top-1 h-2 w-2 rounded-full bg-danger"
+                                        aria-hidden="true"></span>
+                                @endif
+                            </button>
+                            <div id="notification-dropdown"
+                                class="z-50 hidden w-72 divide-y divide-border rounded-xl border border-border bg-card shadow-lg dark:divide-dark-border dark:border-dark-border dark:bg-dark-card">
+                                <div class="flex items-center justify-between px-4 py-3">
+                                    <div>
+                                        <p class="text-sm font-semibold">Notifikasi</p>
+                                        @if (($unreadNotificationCount ?? 0) > 0)
+                                            <p class="text-xs text-text/50 dark:text-dark-muted">{{ $unreadNotificationCount }}
+                                                belum dibaca</p>
+                                        @endif
+                                    </div>
                                     @if (($unreadNotificationCount ?? 0) > 0)
-                                        <p class="text-xs text-text/50 dark:text-dark-muted">{{ $unreadNotificationCount }}
-                                            belum dibaca</p>
+                                        <form action="{{ route('notifications.read-all') }}" method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="text-xs font-medium text-accent hover:underline dark:text-primary">Tandai
+                                                semua</button>
+                                        </form>
                                     @endif
                                 </div>
-                                @if (($unreadNotificationCount ?? 0) > 0)
-                                    <form action="{{ route('notifications.read-all') }}" method="POST">
-                                        @csrf
-                                        <button type="submit"
-                                            class="text-xs font-medium text-accent hover:underline dark:text-primary">Tandai
-                                            semua</button>
-                                    </form>
-                                @endif
-                            </div>
-                            <ul class="max-h-64 overflow-y-auto py-1 text-sm">
-                                @forelse($notifications ?? [] as $notification)
-                                    <li
-                                        class="px-4 py-3 hover:bg-secondary dark:hover:bg-dark-border {{ $notification->is_read ? 'opacity-70' : '' }}">
-                                        <div class="flex items-start justify-between gap-2">
-                                            <div>
-                                                <p class="font-medium">{{ $notification->title }}</p>
-                                                <p class="text-xs text-text/50 dark:text-dark-muted">
-                                                    {{ $notification->message }}</p>
-                                                <p class="mt-1 text-[10px] text-text/40">
-                                                    {{ $notification->created_at->diffForHumans() }}</p>
+                                <ul class="max-h-64 overflow-y-auto py-1 text-sm">
+                                    @forelse($notifications ?? [] as $notification)
+                                        <li
+                                            class="px-4 py-3 hover:bg-secondary dark:hover:bg-dark-border {{ $notification->is_read ? 'opacity-70' : '' }}">
+                                            <div class="flex items-start justify-between gap-2">
+                                                <div>
+                                                    <p class="font-medium">{{ $notification->title }}</p>
+                                                    <p class="text-xs text-text/50 dark:text-dark-muted">
+                                                        {{ $notification->message }}</p>
+                                                    <p class="mt-1 text-[10px] text-text/40">
+                                                        {{ $notification->created_at->diffForHumans() }}</p>
+                                                </div>
+                                                @if (!$notification->is_read)
+                                                    <form action="{{ route('notifications.read', $notification) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <button type="submit" class="text-xs text-accent dark:text-primary"
+                                                            title="Tandai dibaca">✓</button>
+                                                    </form>
+                                                @endif
                                             </div>
-                                            @if (!$notification->is_read)
-                                                <form action="{{ route('notifications.read', $notification) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="text-xs text-accent dark:text-primary"
-                                                        title="Tandai dibaca">✓</button>
-                                                </form>
-                                            @endif
-                                        </div>
-                                    </li>
-                                @empty
-                                    <li class="px-4 py-6 text-center text-text/50 dark:text-dark-muted">Belum ada
-                                        notifikasi.</li>
-                                @endforelse
-                            </ul>
+                                        </li>
+                                    @empty
+                                        <li class="px-4 py-6 text-center text-text/50 dark:text-dark-muted">Belum ada
+                                            notifikasi.</li>
+                                    @endforelse
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="relative">
                         <button id="user-menu-button" data-dropdown-toggle="user-dropdown" type="button"
@@ -143,16 +148,18 @@
                                                 data-lucide="layout-dashboard" class="h-4 w-4" aria-hidden="true"></i>
                                             Panel Admin</a></li>
                                 @endif
-                                <li><a href="{{ route('dashboard') }}"
-                                        class="flex items-center gap-2 px-4 py-2 hover:bg-secondary dark:hover:bg-dark-border"><i
-                                            data-lucide="home" class="h-4 w-4" aria-hidden="true"></i> Dashboard</a></li>
+                                @if (auth()->user()->isCustomer())
+                                    <li><a href="{{ route('dashboard') }}"
+                                            class="flex items-center gap-2 px-4 py-2 hover:bg-secondary dark:hover:bg-dark-border"><i
+                                                data-lucide="home" class="h-4 w-4" aria-hidden="true"></i> Dashboard</a></li>
+                                    <li><a href="{{ route('orders.index') }}"
+                                            class="flex items-center gap-2 px-4 py-2 hover:bg-secondary dark:hover:bg-dark-border"><i
+                                                data-lucide="package" class="h-4 w-4" aria-hidden="true"></i> Pesanan
+                                            Saya</a></li>
+                                @endif
                                 <li><a href="{{ route('profile.edit') }}"
                                         class="flex items-center gap-2 px-4 py-2 hover:bg-secondary dark:hover:bg-dark-border"><i
                                             data-lucide="user" class="h-4 w-4" aria-hidden="true"></i> Profil</a></li>
-                                <li><a href="{{ route('orders.index') }}"
-                                        class="flex items-center gap-2 px-4 py-2 hover:bg-secondary dark:hover:bg-dark-border"><i
-                                            data-lucide="package" class="h-4 w-4" aria-hidden="true"></i> Pesanan
-                                        Saya</a></li>
                             </ul>
                             <div class="py-1">
                                 <form action="{{ route('logout') }}" method="POST"
@@ -190,11 +197,16 @@
                 <a href="{{ route('home') }}" class="nav-link px-2 py-2">Home</a>
                 <a href="{{ route('products.index') }}" class="nav-link px-2 py-2">Katalog</a>
                 @auth
-                    <a href="{{ route('dashboard') }}" class="nav-link px-2 py-2">Dashboard</a>
-                    <a href="{{ route('cart.index') }}" class="nav-link px-2 py-2">Keranjang ({{ $cartCount }})</a>
-                    <a href="{{ route('wishlist.index') }}" class="nav-link px-2 py-2">Wishlist
-                        ({{ $wishlistCount }})</a>
-                    <a href="{{ route('orders.index') }}" class="nav-link px-2 py-2">Pesanan Saya</a>
+                    @if (auth()->user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link px-2 py-2">Panel Admin</a>
+                    @endif
+                    @if (auth()->user()->isCustomer())
+                        <a href="{{ route('dashboard') }}" class="nav-link px-2 py-2">Dashboard</a>
+                        <a href="{{ route('cart.index') }}" class="nav-link px-2 py-2">Keranjang ({{ $cartCount }})</a>
+                        <a href="{{ route('wishlist.index') }}" class="nav-link px-2 py-2">Wishlist
+                            ({{ $wishlistCount }})</a>
+                        <a href="{{ route('orders.index') }}" class="nav-link px-2 py-2">Pesanan Saya</a>
+                    @endif
                     <a href="{{ route('profile.edit') }}" class="nav-link px-2 py-2">Profil</a>
                     <form action="{{ route('logout') }}" method="POST" class="px-2 pt-2">
                         @csrf
@@ -203,7 +215,7 @@
                 @else
                     <a href="{{ route('login') }}" class="nav-link px-2 py-2">Login</a>
                     <a href="{{ route('register') }}" class="nav-link px-2 py-2">Daftar</a>
-                @endguest
+                @endauth
             </div>
         </div>
     </div>
