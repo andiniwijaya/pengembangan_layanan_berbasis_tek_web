@@ -1,37 +1,26 @@
-<header
-    class="sticky top-0 z-20 border-b border-border bg-card/95 backdrop-blur-md dark:border-dark-border dark:bg-dark-card/95">
+<header class="admin-header">
     <div class="flex h-16 items-center justify-between gap-4 px-4 md:px-6">
         <div class="flex min-w-0 flex-1 items-center gap-3">
             <button type="button" data-admin-sidebar-toggle
-                class="rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary lg:hidden dark:text-dark-muted dark:hover:bg-dark-border"
-                data-tooltip-target="tooltip-admin-menu" data-tooltip-placement="bottom" aria-label="Buka menu">
-                <i data-lucide="menu" class="h-5 w-5" aria-hidden="true"></i>
+                class="rounded-xl p-2.5 text-accent transition-colors hover:bg-primary/30 dark:text-primary dark:hover:bg-primary/20"
+                data-tooltip-target="tooltip-admin-menu" data-tooltip-placement="bottom"
+                aria-label="Buka atau tutup sidebar">
+                <i data-admin-sidebar-toggle-icon data-lucide="panel-left-open" class="h-5 w-5" aria-hidden="true"></i>
             </button>
             <div id="tooltip-admin-menu" role="tooltip"
                 class="tooltip invisible absolute z-50 inline-block rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity duration-300 dark:bg-dark-border">
-                Menu
+                Menu Sidebar
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
 
             <div class="hidden min-w-0 sm:block">
                 <h1 class="truncate text-lg font-semibold">@yield('page-title', 'Panel Admin')</h1>
             </div>
-
-            <form action="{{ route('admin.products.index') }}" method="GET"
-                class="ml-auto hidden max-w-xs flex-1 md:flex" role="search">
-                <label for="admin-search" class="sr-only">Cari produk</label>
-                <div class="relative w-full">
-                    <i data-lucide="search" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text/40"
-                        aria-hidden="true"></i>
-                    <input id="admin-search" type="search" name="search" value="{{ request('search') }}"
-                        placeholder="Cari produk..." class="input-field py-2 pl-10 text-sm">
-                </div>
-            </form>
         </div>
 
         <div class="flex shrink-0 items-center gap-1 sm:gap-2">
             <button id="dark-mode-toggle" type="button"
-                class="rounded-xl p-2.5 text-text/70 transition-colors hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border"
+                class="rounded-xl p-2.5 text-accent/80 transition-colors hover:bg-primary/30 dark:text-primary/80 dark:hover:bg-primary/20"
                 data-tooltip-target="tooltip-admin-theme" data-tooltip-placement="bottom" aria-label="Ganti mode gelap">
                 <i data-lucide="moon" class="h-5 w-5 dark:hidden" aria-hidden="true"></i>
                 <i data-lucide="sun" class="hidden h-5 w-5 dark:block" aria-hidden="true"></i>

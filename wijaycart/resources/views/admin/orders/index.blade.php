@@ -4,28 +4,23 @@
 @section('page-title', request('payment') === 'pending' ? 'Kelola Pembayaran' : 'Kelola Pesanan')
 
 @section('content')
-    <div class="mb-6 card !p-4">
-        <form action="{{ route('admin.orders.index') }}" method="GET" class="flex flex-wrap gap-3">
-            @if (request('payment') === 'pending')
-                <input type="hidden" name="payment" value="pending">
-            @endif
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nomor pesanan..."
-                class="input-field max-w-xs">
-            <select name="status" class="input-field max-w-xs">
-                <option value="">Semua Status</option>
-                @foreach ([
+    <x-admin.list-filters :action="route('admin.orders.index')" search-placeholder="Cari nomor pesanan atau nama penerima..."
+        :status-options="[
             'pending' => 'Menunggu',
             'processing' => 'Diproses',
             'shipped' => 'Dikirim',
             'delivered' => 'Selesai',
             'cancelled' => 'Dibatalkan',
-        ] as $status => $label)
-                    <option value="{{ $status }}" @selected(request('status') === $status)>{{ $label }}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn-accent text-sm">Filter</button>
-        </form>
-    </div>
+        ]" :filter-keys="['search', 'status', 'payment']"
+        :reset-url="request('payment') === 'pending' ? route('admin.orders.index', ['payment' => 'pending']) : route('admin.orders.index')">
+        <x-slot:hidden>
+            @if (request('payment') === 'pending')
+                <input type="hidden" name="payment" value="pending">
+            @endif
+        </x-slot:hidden>
+    </x-admin.list-filters>
+
+    <p class="mb-4 text-sm text-text/60 dark:text-dark-muted">{{ $orders->total() }} pesanan</p>
 
     @if ($orders->isEmpty())
         <x-empty-state icon="shopping-bag" title="Belum Ada Transaksi"

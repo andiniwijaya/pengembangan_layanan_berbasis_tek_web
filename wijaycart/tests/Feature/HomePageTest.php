@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use Tests\TestCase;
 
 class HomePageTest extends TestCase
@@ -13,16 +12,16 @@ class HomePageTest extends TestCase
 
         $response->assertOk();
         $response->assertViewIs('home');
-        $response->assertSee('Temukan Gaya Hidup', false);
+        $response->assertSee('Kategori', false);
+        $response->assertSee('Produk Unggulan', false);
     }
 
-    public function test_home_page_contains_hero_carousel(): void
+    public function test_home_page_does_not_contain_hero_carousel(): void
     {
         $response = $this->get(route('home'));
 
         $response->assertOk();
-        $response->assertSee('id="hero-carousel"', false);
-        $response->assertSee('Belanja Sekarang', false);
-        $response->assertSee('Lihat Katalog', false);
+        $response->assertDontSee('id="hero-carousel"', false);
+        $response->assertSee('Jelajahi koleksi berdasarkan kategori', false);
     }
 }

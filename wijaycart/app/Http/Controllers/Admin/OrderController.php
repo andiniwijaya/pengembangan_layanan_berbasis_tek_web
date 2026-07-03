@@ -59,7 +59,9 @@ class OrderController extends Controller
             $this->orderService->markPaymentPaid($order);
         }
 
-        return back()->with('success', 'Status pesanan diperbarui.');
+        return redirect()
+            ->route('admin.orders.index')
+            ->with('success', 'Status pesanan diperbarui.');
     }
 
     public function updatePayment(OrderPaymentUpdateRequest $request, Order $order): RedirectResponse
@@ -79,6 +81,8 @@ class OrderController extends Controller
             $this->orderService->markPaymentPaid($order);
         }
 
-        return back()->with('success', 'Status pembayaran diperbarui.');
+        return redirect()
+            ->route('admin.orders.index')
+            ->with('success', 'Status pembayaran diperbarui.');
     }
 }

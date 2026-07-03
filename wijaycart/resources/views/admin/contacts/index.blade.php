@@ -4,18 +4,10 @@
 @section('page-title', 'Pesan Kontak')
 
 @section('content')
-    <div class="mb-6 card !p-4">
-        <form action="{{ route('admin.contacts.index') }}" method="GET" class="flex flex-wrap gap-3">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, subjek..."
-                class="input-field max-w-xs">
-            <select name="status" class="input-field max-w-xs">
-                <option value="">Semua Status</option>
-                <option value="unread" @selected(request('status') === 'unread')>Belum Dibaca</option>
-                <option value="read" @selected(request('status') === 'read')>Dibaca</option>
-            </select>
-            <button type="submit" class="btn-accent text-sm">Filter</button>
-        </form>
-    </div>
+    <x-admin.list-filters :action="route('admin.contacts.index')" search-placeholder="Cari nama, email, subjek..."
+        :status-options="['unread' => 'Belum Dibaca', 'read' => 'Dibaca']" />
+
+    <p class="mb-4 text-sm text-text/60 dark:text-dark-muted">{{ $messages->total() }} pesan</p>
 
     @if ($messages->isEmpty())
         <x-empty-state icon="mail" title="Belum Ada Pesan Kontak"

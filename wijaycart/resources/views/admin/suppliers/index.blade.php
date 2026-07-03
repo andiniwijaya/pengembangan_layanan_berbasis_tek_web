@@ -4,25 +4,14 @@
 @section('page-title', 'Kelola Supplier')
 
 @section('content')
+    <x-admin.list-filters :action="route('admin.suppliers.index')" search-placeholder="Cari nama, kode, email..."
+        :status-options="['active' => 'Aktif', 'inactive' => 'Nonaktif']" />
+
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <form action="{{ route('admin.suppliers.index') }}" method="GET" class="flex flex-wrap gap-2">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, kode, email..."
-                class="input-field w-full sm:w-64">
-            <select name="status" class="input-field w-full sm:w-40">
-                <option value="">Semua Status</option>
-                <option value="active" @selected(request('status') === 'active')>Aktif</option>
-                <option value="inactive" @selected(request('status') === 'inactive')>Nonaktif</option>
-            </select>
-            <button type="submit" class="btn-secondary text-sm"><i data-lucide="search" class="h-4 w-4"></i> Cari</button>
-            @if (request()->hasAny(['search', 'status']))
-                <a href="{{ route('admin.suppliers.index') }}" class="btn-secondary text-sm">Reset</a>
-            @endif
-        </form>
+        <p class="text-sm text-text/60 dark:text-dark-muted">{{ $suppliers->total() }} supplier</p>
         <a href="{{ route('admin.suppliers.create') }}" class="btn-accent text-sm"><i data-lucide="plus"
                 class="h-4 w-4"></i> Tambah Supplier</a>
     </div>
-
-    <p class="mb-4 text-sm text-text/60 dark:text-dark-muted">{{ $suppliers->total() }} supplier</p>
 
     @if ($suppliers->isEmpty())
         <x-empty-state icon="truck" title="Belum Ada Supplier"
@@ -44,7 +33,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($suppliers as $supplier)
+                        @foreach ($suppliers as $supplier)
                             <tr>
                                 <td class="font-mono text-xs">{{ $supplier->code }}</td>
                                 <td class="font-medium">{{ $supplier->name }}</td>
@@ -71,8 +60,7 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

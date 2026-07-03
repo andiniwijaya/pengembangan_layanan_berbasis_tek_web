@@ -17,6 +17,10 @@
     --color-background: #FFFCF5;
     --color-card: #FFFFFF;
     --color-accent: #8B5E3C;
+    --color-gold: #D4A853;
+    --color-gold-light: #FCF0D4;
+    --color-gold-dark: #B8892A;
+    --color-gold-border: #E5C76B;
     --color-text: #4A3A2A;
     --color-success: #7FB77E;
     --color-danger: #D97777;
@@ -196,15 +200,221 @@
     }
 
     .admin-nav-link-active {
-        @apply bg-primary/35 text-accent shadow-sm dark:bg-primary/20 dark:text-primary;
+        @apply bg-primary/50 text-accent shadow-sm ring-1 ring-gold-border/50 dark:bg-primary/25 dark:text-primary dark:ring-primary/30;
     }
 
     .admin-nav-link-inactive {
-        @apply text-text/70 hover:translate-x-0.5 hover:bg-secondary dark:text-dark-muted dark:hover:bg-dark-border;
+        @apply text-accent/75 hover:bg-primary/30 hover:text-accent dark:text-dark-muted dark:hover:bg-primary/15 dark:hover:text-primary;
+    }
+
+    .admin-nav-link-inactive:hover .admin-nav-icon {
+        @apply bg-primary/45 ring-1 ring-gold-border/40 dark:bg-primary/25 dark:ring-primary/25;
+    }
+
+    .admin-nav-icon {
+        @apply flex h-8 w-8 items-center justify-center rounded-lg bg-gold-light/80 transition-all duration-200 dark:bg-dark-border/50;
+    }
+
+    .admin-nav-icon-active {
+        @apply bg-primary/55 ring-1 ring-gold-border/50 dark:bg-primary/35 dark:ring-primary/30;
     }
 
     .admin-nav-section {
-        @apply mb-1 px-3 pt-4 text-[10px] font-bold uppercase tracking-widest text-text/40 dark:text-dark-muted;
+        @apply mb-1 px-3 pt-4 text-[10px] font-bold uppercase tracking-widest text-accent/50 dark:text-dark-muted;
+    }
+
+    .store-navbar {
+        @apply sticky top-0 z-40 border-b border-gold-border/50 bg-gradient-to-r from-gold-light via-primary/75 to-gold-light text-accent backdrop-blur-md transition-shadow duration-300;
+    }
+
+    .dark .store-navbar {
+        @apply border-primary/20 bg-gradient-to-r from-dark-card via-primary/10 to-dark-card text-primary;
+    }
+
+    .store-footer {
+        @apply mt-auto border-t border-gold-border/50 bg-gradient-to-r from-gold-light via-primary/75 to-gold-light text-accent backdrop-blur-md;
+    }
+
+    .dark .store-footer {
+        @apply border-primary/20 bg-gradient-to-r from-dark-card via-primary/10 to-dark-card text-primary;
+    }
+
+    .admin-sidebar {
+        @apply fixed inset-y-0 left-0 z-30 flex w-64 -translate-x-full flex-col border-r border-gold-border/50 bg-gradient-to-b from-gold-light via-primary/40 to-secondary shadow-lg transition-[transform,width] duration-300;
+    }
+
+    .dark .admin-sidebar {
+        @apply border-primary/20 bg-gradient-to-b from-dark-card via-primary/10 to-dark-bg shadow-none;
+    }
+
+    .admin-sidebar.is-open {
+        @apply translate-x-0;
+    }
+
+    .admin-sidebar-close {
+        @apply ml-auto rounded-lg p-2 text-accent/70 transition-colors hover:bg-primary/30 hover:text-accent dark:text-primary/70 dark:hover:bg-primary/20 dark:hover:text-primary;
+    }
+
+    .admin-sidebar-brand {
+        @apply flex h-16 shrink-0 items-center gap-3 border-b border-gold-border/40 bg-primary/25 px-5;
+    }
+
+    .dark .admin-sidebar-brand {
+        @apply border-primary/20 bg-primary/10;
+    }
+
+    .admin-sidebar-footer {
+        @apply shrink-0 border-t border-gold-border/40 bg-primary/15 p-3;
+    }
+
+    .dark .admin-sidebar-footer {
+        @apply border-primary/20 bg-primary/5;
+    }
+
+    .admin-sidebar nav {
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--color-gold-border) 70%, transparent) transparent;
+    }
+
+    .admin-sidebar nav::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .admin-sidebar nav::-webkit-scrollbar-thumb {
+        background-color: color-mix(in srgb, var(--color-gold-border) 65%, transparent);
+        border-radius: 9999px;
+    }
+
+    .admin-page {
+        @apply mx-auto w-full max-w-6xl;
+    }
+
+    .admin-back-link {
+        @apply mb-3 inline-flex items-center gap-2 rounded-lg px-1 py-1 text-sm font-medium text-accent/75 transition-colors hover:text-gold-dark dark:text-primary/80 dark:hover:text-primary;
+    }
+
+    .admin-detail-toolbar {
+        @apply mb-6;
+    }
+
+    .admin-page-subtitle {
+        @apply mb-6 max-w-2xl text-sm leading-relaxed text-text/60 dark:text-dark-muted;
+    }
+
+    .admin-form-card {
+        @apply overflow-hidden rounded-2xl border border-gold-border/45 bg-card shadow-md ring-1 ring-gold-border/20 dark:border-primary/15 dark:bg-dark-card dark:ring-primary/10;
+    }
+
+    .admin-form-card-wide {
+        @apply max-w-none;
+    }
+
+    .admin-form-card-body {
+        @apply p-6 md:p-8;
+    }
+
+    .admin-form-grid {
+        @apply grid gap-8 lg:grid-cols-[minmax(0,1fr)_17.5rem];
+    }
+
+    .admin-form-aside {
+        @apply rounded-2xl border border-gold-border/35 bg-gradient-to-b from-gold-light/50 via-primary/10 to-secondary/40 p-5 dark:border-primary/15 dark:from-primary/10 dark:via-primary/5 dark:to-dark-border/30;
+    }
+
+    .admin-form-aside-title {
+        @apply mb-4 text-xs font-bold uppercase tracking-widest text-accent/60 dark:text-dark-muted;
+    }
+
+    .admin-form-actions {
+        @apply mt-8 flex flex-wrap items-center gap-3 border-t border-gold-border/30 pt-6 dark:border-dark-border;
+    }
+
+    .admin-icon-preview {
+        @apply flex flex-col items-center justify-center rounded-2xl border border-gold-border/40 bg-white/80 p-6 text-center shadow-sm dark:border-primary/20 dark:bg-dark-card/80;
+    }
+
+    .admin-icon-preview-box {
+        @apply mb-3 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/60 via-gold-light to-primary/30 ring-2 ring-gold-border/40 dark:from-primary/30 dark:via-primary/10 dark:to-dark-border dark:ring-primary/25;
+    }
+
+    .admin-tip-box {
+        @apply rounded-xl border border-gold-border/30 bg-white/50 p-4 text-xs leading-relaxed text-text/60 dark:border-primary/15 dark:bg-dark-card/50 dark:text-dark-muted;
+    }
+
+    .admin-main-wrap {
+        @apply flex h-dvh min-h-0 flex-1 flex-col overflow-hidden;
+    }
+
+    .admin-header {
+        @apply shrink-0 border-b border-gold-border/50 bg-gradient-to-r from-gold-light via-primary/75 to-gold-light text-accent backdrop-blur-md;
+    }
+
+    .dark .admin-header {
+        @apply border-primary/20 bg-gradient-to-r from-dark-card via-primary/10 to-dark-card text-primary;
+    }
+
+    .admin-content {
+        @apply flex-1 overflow-y-auto overflow-x-hidden bg-background p-4 md:p-6 lg:p-8 dark:bg-dark-bg;
+    }
+
+    .admin-footer {
+        @apply shrink-0 border-t border-gold-border/50 bg-gradient-to-r from-gold-light via-primary/75 to-gold-light px-4 py-3 text-center text-xs text-accent/70 backdrop-blur-md md:px-6;
+    }
+
+    .dark .admin-footer {
+        @apply border-primary/20 bg-gradient-to-r from-dark-card via-primary/10 to-dark-card text-dark-muted;
+    }
+
+    @media (min-width: 1024px) {
+        .admin-sidebar {
+            @apply translate-x-0;
+        }
+
+        .admin-sidebar.is-collapsed {
+            @apply w-[4.5rem] translate-x-0;
+        }
+
+        .admin-sidebar.is-collapsed .admin-sidebar-brand-text,
+        .admin-sidebar.is-collapsed .admin-nav-section,
+        .admin-sidebar.is-collapsed .admin-nav-label,
+        .admin-sidebar.is-collapsed .admin-sidebar-close {
+            @apply hidden;
+        }
+
+        .admin-sidebar.is-collapsed .admin-sidebar-brand {
+            @apply justify-center px-2;
+        }
+
+        .admin-sidebar.is-collapsed .admin-nav-link {
+            @apply justify-center px-2;
+        }
+
+        .admin-sidebar.is-collapsed [data-nav-tooltip] {
+            @apply relative;
+        }
+
+        .admin-sidebar.is-collapsed nav {
+            overflow: visible;
+        }
+
+        .admin-sidebar.is-collapsed [data-nav-tooltip]:hover::after,
+        .admin-sidebar.is-collapsed [data-nav-tooltip]:focus-visible::after {
+            content: attr(data-nav-tooltip);
+            @apply pointer-events-none absolute left-[calc(100%+0.5rem)] top-1/2 z-50 -translate-y-1/2 whitespace-nowrap rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-white shadow-lg;
+        }
+
+        .dark .admin-sidebar.is-collapsed [data-nav-tooltip]:hover::after,
+        .dark .admin-sidebar.is-collapsed [data-nav-tooltip]:focus-visible::after {
+            @apply border border-primary/20 bg-dark-card text-primary;
+        }
+
+        .admin-main-wrap {
+            @apply ml-64 transition-[margin] duration-300;
+        }
+
+        .admin-main-wrap.is-sidebar-collapsed {
+            @apply ml-[4.5rem];
+        }
     }
 
     .form-label {
@@ -220,7 +430,7 @@
     }
 
     .nav-link {
-        @apply text-sm font-medium text-text/70 transition-colors duration-200 hover:text-accent;
+        @apply text-sm font-medium text-accent/80 transition-colors duration-200 hover:text-gold-dark;
     }
 
     .dark .nav-link {
@@ -250,11 +460,11 @@
     }
 
     .navbar-scrolled {
-        @apply shadow-md;
+        @apply shadow-md ring-1 ring-gold-border/30;
     }
 
     .dark .navbar-scrolled {
-        @apply shadow-lg shadow-black/20;
+        @apply shadow-lg shadow-black/20 ring-primary/20;
     }
 }
 

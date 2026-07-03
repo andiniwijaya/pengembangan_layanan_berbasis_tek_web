@@ -4,7 +4,9 @@
 @section('page-title', 'Detail Customer')
 
 @section('content')
-<div class="grid gap-6 lg:grid-cols-3">
+    <x-admin.detail-toolbar :back-url="route('admin.customers.index')" back-label="Kembali ke Daftar Customer" />
+
+    <div class="grid gap-6 lg:grid-cols-3">
     <div class="card">
         <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-2xl font-bold text-accent">
             {{ strtoupper(substr($customer->name, 0, 1)) }}

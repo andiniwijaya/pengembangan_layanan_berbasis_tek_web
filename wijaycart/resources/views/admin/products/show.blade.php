@@ -4,6 +4,8 @@
 @section('page-title', 'Detail Produk & Barcode')
 
 @section('content')
+    <x-admin.detail-toolbar :back-url="route('admin.products.index')" back-label="Kembali ke Daftar Produk" />
+
     <div class="grid gap-6 lg:grid-cols-2">
         <div class="card">
             <img src="{{ $product->primary_image_url }}" alt="{{ $product->name }}"

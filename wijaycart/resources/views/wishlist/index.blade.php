@@ -8,7 +8,7 @@
     <p class="mb-8 text-sm text-text/60 dark:text-dark-muted">{{ $wishlists->count() }} produk disimpan</p>
 
     @if($wishlists->count())
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-5">
         @foreach($wishlists as $wishlist)
             @include('partials.product-card', ['product' => $wishlist->product, 'wishlistIds' => $wishlists->pluck('product_id')->toArray()])
         @endforeach

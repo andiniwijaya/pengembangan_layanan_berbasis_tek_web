@@ -54,6 +54,8 @@ class DashboardController extends Controller
 
         $recentContacts = ContactMessage::latest()->take(3)->get();
 
+        $recentSubscribers = NewsletterSubscriber::latest('subscribed_at')->take(5)->get();
+
         $salesChart = Order::select(
             DB::raw('DATE(created_at) as date'),
             DB::raw('SUM(total) as revenue'),
@@ -72,6 +74,7 @@ class DashboardController extends Controller
             'lowStockProducts',
             'topProducts',
             'recentContacts',
+            'recentSubscribers',
             'salesChart',
         ));
     }

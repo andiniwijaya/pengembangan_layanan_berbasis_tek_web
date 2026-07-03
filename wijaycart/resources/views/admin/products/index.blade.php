@@ -4,17 +4,28 @@
 @section('page-title', 'Kelola Produk')
 
 @section('content')
+    <x-admin.list-filters :action="route('admin.products.index')" search-placeholder="Cari nama atau barcode..."
+        :status-options="['active' => 'Aktif', 'inactive' => 'Nonaktif']" :filter-keys="['search', 'status', 'category']">
+        <x-slot:filters>
+            <div class="min-w-[10rem]">
+                <label for="admin-filter-category" class="mb-1.5 block text-xs font-medium text-text/60 dark:text-dark-muted">Kategori</label>
+                <select id="admin-filter-category" name="category" class="input-field w-full py-2 text-sm">
+                    <option value="">Semua Kategori</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @selected((string) request('category') === (string) $category->id)>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </x-slot:filters>
+    </x-admin.list-filters>
+
     <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-sm text-text/60 dark:text-dark-muted">{{ $products->total() }} produk</p>
-        <a href="{{ route('admin.products.create') }}" class="btn-accent text-sm" data-tooltip-target="tooltip-add-product"
-            data-tooltip-placement="top">
+        <a href="{{ route('admin.products.create') }}" class="btn-accent text-sm">
             <i data-lucide="plus" class="h-4 w-4" aria-hidden="true"></i> Tambah Produk
         </a>
-        <div id="tooltip-add-product" role="tooltip"
-            class="tooltip invisible absolute z-50 inline-block rounded-lg bg-accent px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity duration-300 dark:bg-dark-border">
-            Tambah Produk
-            <div class="tooltip-arrow" data-popper-arrow></div>
-        </div>
     </div>
 
     @if ($products->isEmpty())

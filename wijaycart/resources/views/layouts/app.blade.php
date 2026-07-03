@@ -26,7 +26,11 @@
         @yield('content')
     </main>
 
-    @include('partials.footer')
+    @if (request()->routeIs('home'))
+        @include('partials.footer-full')
+    @else
+        @include('partials.footer-simple')
+    @endif
 
     @stack('scripts')
 </body>

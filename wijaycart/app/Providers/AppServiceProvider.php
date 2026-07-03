@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with(compact('cartCount', 'wishlistCount', 'notifications', 'unreadNotificationCount'));
         });
 
-        View::composer(['partials.footer', 'layouts.app', 'pages.contact'], function ($view) {
+        View::composer(['partials.footer-full', 'layouts.app', 'pages.contact'], function ($view) {
             $footerCategories = Category::query()
                 ->where('is_active', true)
                 ->withCount('activeProducts')

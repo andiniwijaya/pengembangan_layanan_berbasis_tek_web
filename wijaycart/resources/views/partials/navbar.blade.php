@@ -1,5 +1,4 @@
-<nav id="main-navbar"
-    class="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-md transition-shadow duration-300 dark:border-dark-border dark:bg-dark-card/95">
+<nav id="main-navbar" class="store-navbar">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between gap-4">
             <div class="flex items-center gap-4 md:gap-8">

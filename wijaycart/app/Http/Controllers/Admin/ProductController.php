@@ -9,7 +9,9 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Supplier;
 use App\Services\BarcodeService;
+use App\Support\ImageAssets;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
@@ -18,13 +20,30 @@ class ProductController extends Controller
 {
     public function __construct(private BarcodeService $barcodeService) {}
 
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::with(['category', 'supplier'])
-            ->latest()
-            ->paginate(10);
+        $query = Product::with(['category', 'supplier']);
 
-        return view('admin.products.index', compact('products'));
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('barcode', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $products = $query->latest()->paginate(10)->withQueryString();
+        $categories = Category::orderBy('name')->get();
+
+        return view('admin.products.index', compact('products', 'categories'));
     }
 
     public function create(): View

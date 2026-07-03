@@ -4,10 +4,55 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
+    @php
+        $statCards = [
+            [
+                'label' => 'Total Produk',
+                'value' => $stats['total_products'],
+                'icon' => 'package',
+                'card' => 'stat-card-yellow',
+                'iconBg' => 'stat-icon-bg-primary',
+                'url' => route('admin.products.index'),
+            ],
+            [
+                'label' => 'Total Customer',
+                'value' => $stats['total_customers'],
+                'icon' => 'users',
+                'card' => 'stat-card-blue',
+                'iconBg' => 'stat-icon-bg-blue',
+                'url' => route('admin.customers.index'),
+            ],
+            [
+                'label' => 'Total Pesanan',
+                'value' => $stats['total_orders'],
+                'icon' => 'shopping-bag',
+                'card' => 'stat-card-green',
+                'iconBg' => 'stat-icon-bg-success',
+                'url' => route('admin.orders.index'),
+            ],
+            [
+                'label' => 'Pendapatan',
+                'value' => 'Rp ' . number_format($stats['total_revenue'], 0, ',', '.'),
+                'icon' => 'wallet',
+                'card' => 'stat-card-orange',
+                'iconBg' => 'stat-icon-bg-orange',
+                'url' => route('admin.reports.index'),
+            ],
+            [
+                'label' => 'Kategori',
+                'value' => $stats['total_categories'],
+                'icon' => 'tags',
+                'card' => 'stat-card-purple',
+                'iconBg' => 'stat-icon-bg-purple',
+                'url' => route('admin.categories.index'),
+            ],
+        ];
+    @endphp
+
     {{-- Statistik utama --}}
     <div class="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        @foreach ([['label' => 'Total Produk', 'value' => $stats['total_products'], 'icon' => 'package', 'card' => 'stat-card-yellow', 'iconBg' => 'stat-icon-bg-primary'], ['label' => 'Total Customer', 'value' => $stats['total_customers'], 'icon' => 'users', 'card' => 'stat-card-blue', 'iconBg' => 'stat-icon-bg-blue'], ['label' => 'Total Pesanan', 'value' => $stats['total_orders'], 'icon' => 'shopping-bag', 'card' => 'stat-card-green', 'iconBg' => 'stat-icon-bg-success'], ['label' => 'Pendapatan', 'value' => 'Rp ' . number_format($stats['total_revenue'], 0, ',', '.'), 'icon' => 'wallet', 'card' => 'stat-card-orange', 'iconBg' => 'stat-icon-bg-orange'], ['label' => 'Kategori', 'value' => $stats['total_categories'], 'icon' => 'tags', 'card' => 'stat-card-purple', 'iconBg' => 'stat-icon-bg-purple']] as $stat)
-            <div class="{{ $stat['card'] }}">
+        @foreach ($statCards as $stat)
+            <a href="{{ $stat['url'] }}" class="{{ $stat['card'] }} card-hover block transition-transform hover:scale-[1.02]">
                 <div class="flex items-start justify-between gap-3">
                     <div class="min-w-0">
                         <p class="text-xs font-semibold uppercase tracking-wider text-text/50 dark:text-dark-muted">
@@ -20,14 +65,14 @@
                             aria-hidden="true"></i>
                     </div>
                 </div>
-            </div>
+            </a>
         @endforeach
     </div>
 
     {{-- Ringkasan cepat --}}
     <div class="mb-8 grid gap-4 sm:grid-cols-3">
         <a href="{{ route('admin.orders.index', ['payment' => 'pending']) }}"
-            class="card card-hover flex items-center gap-4 !p-4">
+            class="card card-hover flex items-center gap-4 !p-4 transition-transform hover:scale-[1.02]">
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-orange-200/60 dark:bg-orange-500/20">
                 <i data-lucide="credit-card" class="h-5 w-5 text-accent dark:text-primary"></i>
             </div>
@@ -36,7 +81,8 @@
                 <p class="text-xl font-bold">{{ $stats['pending_payments'] }}</p>
             </div>
         </a>
-        <a href="{{ route('admin.contacts.index') }}" class="card card-hover flex items-center gap-4 !p-4">
+        <a href="{{ route('admin.contacts.index', ['status' => 'unread']) }}"
+            class="card card-hover flex items-center gap-4 !p-4 transition-transform hover:scale-[1.02]">
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-200/60 dark:bg-sky-500/20">
                 <i data-lucide="mail" class="h-5 w-5 text-accent dark:text-primary"></i>
             </div>
@@ -45,7 +91,8 @@
                 <p class="text-xl font-bold">{{ $stats['unread_contacts'] }}</p>
             </div>
         </a>
-        <a href="{{ route('admin.newsletters.index') }}" class="card card-hover flex items-center gap-4 !p-4">
+        <a href="{{ route('admin.newsletters.index', ['status' => 'active']) }}"
+            class="card card-hover flex items-center gap-4 !p-4 transition-transform hover:scale-[1.02]">
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-violet-200/60 dark:bg-violet-500/20">
                 <i data-lucide="newspaper" class="h-5 w-5 text-accent dark:text-primary"></i>
             </div>
@@ -58,18 +105,18 @@
 
     {{-- Grafik --}}
     <div class="mb-8 grid gap-6 lg:grid-cols-3">
-        <div class="card lg:col-span-2">
+        <a href="{{ route('admin.reports.index') }}"
+            class="card card-hover lg:col-span-2 transition-transform hover:scale-[1.005]">
             <div class="mb-4 flex items-center justify-between">
                 <h3 class="font-semibold">Grafik Penjualan (30 Hari)</h3>
-                <a href="{{ route('admin.reports.index') }}"
-                    class="text-xs font-medium text-accent hover:underline dark:text-primary">Lihat Laporan →</a>
+                <span class="text-xs font-medium text-accent dark:text-primary">Lihat Laporan →</span>
             </div>
             <canvas id="salesChart" height="120"></canvas>
             <div id="dashboard-chart-data" class="hidden"
                 data-labels="{{ json_encode($salesChart->pluck('date')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M'))) }}"
                 data-revenue="{{ json_encode($salesChart->pluck('revenue')) }}">
             </div>
-        </div>
+        </a>
         <div class="card">
             <h3 class="mb-4 font-semibold">Produk Terlaris</h3>
             @if ($topProducts->isNotEmpty())
@@ -143,14 +190,14 @@
             </div>
             <div class="space-y-2">
                 @forelse($lowStockProducts as $product)
-                    <div
-                        class="flex items-center justify-between rounded-xl bg-secondary/50 px-3 py-2.5 dark:bg-dark-border/50">
+                    <a href="{{ route('admin.products.show', $product) }}"
+                        class="flex items-center justify-between rounded-xl bg-secondary/50 px-3 py-2.5 transition-colors hover:bg-secondary dark:bg-dark-border/50 dark:hover:bg-dark-border">
                         <div class="min-w-0 pr-2">
                             <p class="truncate text-sm font-medium">{{ $product->name }}</p>
                             <p class="text-xs text-text/50">{{ $product->category->name }}</p>
                         </div>
                         <span class="badge badge-warning shrink-0">{{ $product->stock }} unit</span>
-                    </div>
+                    </a>
                 @empty
                     <x-empty-state icon="package" title="Stok Aman"
                         description="Tidak ada produk dengan stok menipis saat ini." />
@@ -167,7 +214,8 @@
                 <a href="{{ route('admin.contacts.index') }}" class="text-xs text-accent dark:text-primary">Semua →</a>
             </div>
             @forelse($recentContacts as $contact)
-                <div class="mb-3 rounded-xl border border-border p-3 last:mb-0 dark:border-dark-border">
+                <a href="{{ route('admin.contacts.index', ['search' => $contact->email]) }}"
+                    class="mb-3 block rounded-xl border border-border p-3 transition-all last:mb-0 hover:border-primary/40 hover:bg-secondary/50 dark:border-dark-border dark:hover:bg-dark-border">
                     <div class="flex items-start justify-between gap-2">
                         <p class="text-sm font-medium">{{ $contact->subject }}</p>
                         @php
@@ -178,7 +226,7 @@
                     </div>
                     <p class="mt-1 text-xs text-text/50">{{ $contact->name }} · {{ $contact->email }}</p>
                     <p class="mt-2 line-clamp-2 text-sm text-text/70 dark:text-dark-muted">{{ $contact->message }}</p>
-                </div>
+                </a>
             @empty
                 <x-empty-state icon="mail" title="Belum Ada Pesan"
                     description="Pesan dari form kontak akan muncul di sini." />
@@ -186,19 +234,23 @@
         </div>
 
         <div class="card">
-            <h3 class="mb-4 font-semibold">Ringkasan Newsletter</h3>
-            <div class="grid gap-4 sm:grid-cols-2">
-                <div class="rounded-xl bg-violet-100/60 p-4 dark:bg-violet-900/20">
-                    <p class="text-xs font-medium uppercase text-text/50">Subscriber Aktif</p>
-                    <p class="mt-1 text-3xl font-bold">{{ $stats['active_subscribers'] }}</p>
-                </div>
-                <div class="rounded-xl bg-sky-100/60 p-4 dark:bg-sky-900/20">
-                    <p class="text-xs font-medium uppercase text-text/50">Total Terdaftar</p>
-                    <p class="mt-1 text-3xl font-bold">{{ \App\Models\NewsletterSubscriber::count() }}</p>
-                </div>
+            <div class="mb-4 flex items-center justify-between">
+                <h3 class="font-semibold">Subscriber Terbaru</h3>
+                <a href="{{ route('admin.newsletters.index') }}" class="text-xs text-accent dark:text-primary">Semua →</a>
             </div>
-            <a href="{{ route('admin.newsletters.index') }}" class="btn-secondary mt-4 w-full text-sm">Kelola
-                Newsletter</a>
+            <div class="space-y-2">
+                @forelse($recentSubscribers as $subscriber)
+                    <a href="{{ route('admin.newsletters.index', ['search' => $subscriber->email]) }}"
+                        class="flex items-center justify-between rounded-xl border border-border px-3 py-2.5 transition-colors hover:bg-secondary/50 dark:border-dark-border dark:hover:bg-dark-border">
+                        <span class="truncate text-sm font-medium">{{ $subscriber->email }}</span>
+                        <span
+                            class="badge {{ $subscriber->is_active ? 'badge-success' : 'badge-danger' }} shrink-0">{{ $subscriber->is_active ? 'Aktif' : 'Nonaktif' }}</span>
+                    </a>
+                @empty
+                    <x-empty-state icon="newspaper" title="Belum Ada Subscriber"
+                        description="Email yang mendaftar newsletter akan muncul di sini." />
+                @endforelse
+            </div>
         </div>
     </div>
 @endsection

@@ -4,12 +4,13 @@
 @section('page-title', 'Detail Pesanan')
 
 @section('content')
-    <div class="mb-6 flex flex-wrap gap-3">
+    <x-admin.detail-toolbar :back-url="route('admin.orders.index')" back-label="Kembali ke Daftar Pesanan">
         <span class="badge badge-{{ $order->status_color }} text-sm">{{ $order->status_label }}</span>
         @if ($order->payment)
             <span class="badge badge-warning text-sm">{{ $order->payment->status_label }}</span>
         @endif
-    </div>
+        <span class="text-sm text-text/50 dark:text-dark-muted">{{ $order->order_number }}</span>
+    </x-admin.detail-toolbar>
 
     <div class="grid gap-6 lg:grid-cols-3">
         <div class="lg:col-span-2 space-y-6">
@@ -29,10 +30,17 @@
             </div>
 
             <div class="card">
-                <h3 class="mb-4 font-semibold">Update Status</h3>
-                <form action="{{ route('admin.orders.update-status', $order) }}" method="POST"
-                    class="flex flex-wrap gap-3">
-                    @csrf @method('PUT')
+                <h3 class="mb-1 font-semibold">Update Status Pesanan</h3>
+                <p class="mb-4 text-sm text-text/60 dark:text-dark-muted">Setelah disimpan, Anda akan kembali ke daftar pesanan.</p>
+                <form
+                    action="{{ route('admin.orders.update-status', $order) }}"
+                    method="POST"
+                    class="flex flex-wrap items-end gap-3"
+                    data-confirm="Perbarui status pesanan ini?"
+                    data-confirm-title="Perbarui Status"
+                >
+                    @csrf
+                    @method('PUT')
                     @php
                         $orderStatusLabels = [
                             'pending' => 'Menunggu',
@@ -43,12 +51,15 @@
                             'cancelled' => 'Dibatalkan',
                         ];
                     @endphp
-                    <select name="status" class="input-field max-w-xs">
-                        @foreach ($orderStatusLabels as $status => $label)
-                            <option value="{{ $status }}" @selected($order->status === $status)>{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    <button type="submit" class="btn-accent text-sm">Perbarui Status</button>
+                    <div class="min-w-[12rem] flex-1">
+                        <label for="order-status" class="mb-1.5 block text-xs font-medium text-text/60">Status baru</label>
+                        <select id="order-status" name="status" class="input-field w-full">
+                            @foreach ($orderStatusLabels as $status => $label)
+                                <option value="{{ $status }}" @selected($order->status === $status)>{{ $label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-accent text-sm">Simpan Status</button>
                 </form>
             </div>
         </div>
@@ -58,6 +69,10 @@
                 <h3 class="mb-3 font-semibold">Info Customer</h3>
                 <p class="text-sm font-medium">{{ $order->user->name }}</p>
                 <p class="text-sm text-text/60">{{ $order->user->email }}</p>
+                <a href="{{ route('admin.customers.show', $order->user) }}" class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline dark:text-primary">
+                    Lihat profil customer
+                    <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+                </a>
             </div>
             <div class="card">
                 <h3 class="mb-3 font-semibold">Pengiriman</h3>
@@ -77,7 +92,7 @@
                     </div>
                 </div>
                 @if ($order->payment)
-                    <p class="text-sm">Metode: {{ $order->payment->method_label }}</p>
+                    <p class="mt-3 text-sm">Metode: {{ $order->payment->method_label }}</p>
                     @if ($order->payment->payment_proof_url)
                         <div class="mt-3">
                             <p class="mb-2 text-sm font-medium">Bukti Pembayaran</p>
@@ -87,21 +102,30 @@
                             </a>
                         </div>
                     @endif
-                    <form action="{{ route('admin.orders.update-payment', $order) }}" method="POST"
-                        class="mt-4 flex gap-2">
-                        @csrf @method('PUT')
-                        <select name="status" class="input-field flex-1 py-2 text-sm">
-                            @foreach ([
-            'pending' => 'Menunggu Pembayaran',
-            'paid' => 'Lunas',
-            'failed' => 'Gagal',
-            'refunded' => 'Dikembalikan',
-        ] as $status => $label)
-                                <option value="{{ $status }}" @selected($order->payment->status === $status)>{{ $label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <button type="submit" class="btn-accent py-2 text-sm">Perbarui</button>
+                    <form
+                        action="{{ route('admin.orders.update-payment', $order) }}"
+                        method="POST"
+                        class="mt-4 space-y-3"
+                        data-confirm="Perbarui status pembayaran pesanan ini?"
+                        data-confirm-title="Perbarui Pembayaran"
+                    >
+                        @csrf
+                        @method('PUT')
+                        <label for="payment-status" class="block text-xs font-medium text-text/60">Status pembayaran</label>
+                        <div class="flex gap-2">
+                            <select id="payment-status" name="status" class="input-field flex-1 py-2 text-sm">
+                                @foreach ([
+                                    'pending' => 'Menunggu Pembayaran',
+                                    'paid' => 'Lunas',
+                                    'failed' => 'Gagal',
+                                    'refunded' => 'Dikembalikan',
+                                ] as $status => $label)
+                                    <option value="{{ $status }}" @selected($order->payment->status === $status)>{{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn-accent shrink-0 py-2 text-sm">Simpan</button>
+                        </div>
                     </form>
                 @endif
             </div>

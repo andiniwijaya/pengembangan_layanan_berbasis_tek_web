@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Support\HeroSlides;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -13,7 +12,8 @@ class HomeController extends Controller
     {
         $categories = Category::where('is_active', true)
             ->withCount('activeProducts')
-            ->take(8)
+            ->orderBy('name')
+            ->take(3)
             ->get();
 
         $featuredProducts = Product::with(['category', 'primaryImage'])
@@ -37,8 +37,6 @@ class HomeController extends Controller
             ? auth()->user()->wishlists()->pluck('product_id')->toArray()
             : [];
 
-        $heroSlides = HeroSlides::all();
-
-        return view('home', compact('categories', 'featuredProducts', 'latestProducts', 'wishlistIds', 'heroSlides'));
+        return view('home', compact('categories', 'featuredProducts', 'latestProducts', 'wishlistIds'));
     }
 }

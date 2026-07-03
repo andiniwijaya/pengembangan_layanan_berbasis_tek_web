@@ -4,7 +4,9 @@
 @section('page-title', 'Detail Supplier')
 
 @section('content')
-<div class="grid gap-6 lg:grid-cols-3">
+    <x-admin.detail-toolbar :back-url="route('admin.suppliers.index')" back-label="Kembali ke Daftar Supplier" />
+
+    <div class="grid gap-6 lg:grid-cols-3">
     <div class="card lg:col-span-1">
         <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary">
             <i data-lucide="truck" class="h-7 w-7 text-accent"></i>

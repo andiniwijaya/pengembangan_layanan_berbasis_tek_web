@@ -3,21 +3,13 @@
 @section('title', 'Beranda')
 
 @section('content')
-    @include('partials.hero-carousel', ['heroSlides' => $heroSlides])
-
     <section class="py-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-10 flex items-end justify-between">
-                <div>
-                    <h2 class="section-title">Kategori</h2>
-                    <p class="mt-2 text-text/60 dark:text-dark-muted">Jelajahi koleksi berdasarkan kategori</p>
-                </div>
-                <a href="{{ route('products.index') }}"
-                    class="hidden items-center gap-1 text-sm font-medium text-accent hover:underline sm:flex dark:text-primary">
-                    Lihat Semua <i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i>
-                </a>
+            <div class="mb-10 text-center">
+                <h2 class="section-title">Kategori</h2>
+                <p class="mt-2 text-text/60 dark:text-dark-muted">Jelajahi koleksi berdasarkan kategori</p>
             </div>
-            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:gap-6">
+            <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
                 @foreach ($categories as $category)
                     @include('partials.category-card', ['category' => $category])
                 @endforeach
@@ -44,11 +36,9 @@
 
     <section class="py-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-10 flex items-end justify-between">
-                <div>
-                    <h2 class="section-title">Produk Terbaru</h2>
-                    <p class="mt-2 text-text/60 dark:text-dark-muted">Koleksi terbaru yang baru saja hadir</p>
-                </div>
+            <div class="mb-10 text-center">
+                <h2 class="section-title">Produk Terbaru</h2>
+                <p class="mt-2 text-text/60 dark:text-dark-muted">Koleksi terbaru yang baru saja hadir</p>
             </div>
             <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
                 @foreach ($latestProducts as $product)

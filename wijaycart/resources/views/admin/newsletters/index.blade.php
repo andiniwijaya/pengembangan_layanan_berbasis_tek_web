@@ -5,32 +5,27 @@
 
 @section('content')
     <div class="mb-6 grid gap-4 sm:grid-cols-3">
-        <div class="stat-card-purple !p-4">
+        <a href="{{ route('admin.newsletters.index') }}"
+            class="stat-card-purple card-hover !p-4 transition-transform hover:scale-[1.02]">
             <p class="text-xs uppercase text-text/50">Total</p>
             <p class="text-2xl font-bold">{{ $stats['total'] }}</p>
-        </div>
-        <div class="stat-card-green !p-4">
+        </a>
+        <a href="{{ route('admin.newsletters.index', ['status' => 'active']) }}"
+            class="stat-card-green card-hover !p-4 transition-transform hover:scale-[1.02]">
             <p class="text-xs uppercase text-text/50">Aktif</p>
             <p class="text-2xl font-bold">{{ $stats['active'] }}</p>
-        </div>
-        <div class="stat-card-orange !p-4">
+        </a>
+        <a href="{{ route('admin.newsletters.index', ['status' => 'inactive']) }}"
+            class="stat-card-orange card-hover !p-4 transition-transform hover:scale-[1.02]">
             <p class="text-xs uppercase text-text/50">Nonaktif</p>
             <p class="text-2xl font-bold">{{ $stats['inactive'] }}</p>
-        </div>
+        </a>
     </div>
 
-    <div class="mb-6 card !p-4">
-        <form action="{{ route('admin.newsletters.index') }}" method="GET" class="flex flex-wrap gap-3">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari email..."
-                class="input-field max-w-xs">
-            <select name="status" class="input-field max-w-xs">
-                <option value="">Semua Status</option>
-                <option value="active" @selected(request('status') === 'active')>Aktif</option>
-                <option value="inactive" @selected(request('status') === 'inactive')>Nonaktif</option>
-            </select>
-            <button type="submit" class="btn-accent text-sm">Filter</button>
-        </form>
-    </div>
+    <x-admin.list-filters :action="route('admin.newsletters.index')" search-placeholder="Cari email..."
+        :status-options="['active' => 'Aktif', 'inactive' => 'Nonaktif']" />
+
+    <p class="mb-4 text-sm text-text/60 dark:text-dark-muted">{{ $subscribers->total() }} subscriber</p>
 
     @if ($subscribers->isEmpty())
         <x-empty-state icon="newspaper" title="Belum Ada Subscriber"

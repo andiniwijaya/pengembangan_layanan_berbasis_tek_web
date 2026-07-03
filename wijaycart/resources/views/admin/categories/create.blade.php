@@ -4,38 +4,63 @@
 @section('page-title', 'Tambah Kategori')
 
 @section('content')
-<div class="mx-auto max-w-2xl">
-    <div class="card">
-        <form action="{{ route('admin.categories.store') }}" method="POST" class="space-y-5">
+    <x-admin.form-page :back-url="route('admin.categories.index')" back-label="Kembali ke Kategori"
+        subtitle="Buat kategori baru untuk mengelompokkan produk di katalog WijayCart.">
+        <form action="{{ route('admin.categories.store') }}" method="POST">
             @csrf
-            <div>
-                <label class="mb-1.5 block text-sm font-medium">Nama Kategori</label>
-                <input type="text" name="name" value="{{ old('name') }}" class="input-field" required>
-            </div>
-            <div>
-                <label class="mb-1.5 block text-sm font-medium">Slug</label>
-                <input type="text" name="slug" value="{{ old('slug') }}" class="input-field" placeholder="Auto-generate dari nama">
-            </div>
-            <div>
-                <label class="mb-1.5 block text-sm font-medium">Deskripsi</label>
-                <textarea name="description" rows="3" class="input-field">{{ old('description') }}</textarea>
-            </div>
-            <div class="rounded-xl border border-border/60 bg-secondary/30 p-4 dark:border-dark-border dark:bg-dark-card/40">
-                <p class="mb-2 text-sm font-medium text-text/70 dark:text-dark-muted">Ikon Kategori</p>
-                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white shadow-sm dark:bg-dark-card">
-                    <i data-lucide="tag" class="h-8 w-8 text-accent dark:text-primary" aria-hidden="true"></i>
+
+            <div class="admin-form-grid">
+                <div class="space-y-5">
+                    <div>
+                        <label for="name" class="form-label">Nama Kategori <span class="form-required">*</span></label>
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" class="input-field"
+                            placeholder="Contoh: Home Living" required>
+                    </div>
+                    <div>
+                        <label for="slug" class="form-label">Slug</label>
+                        <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="input-field"
+                            placeholder="Kosongkan untuk auto-generate dari nama">
+                        <p class="form-helper">URL filter katalog: /products?category=slug-kategori</p>
+                    </div>
+                    <div>
+                        <label for="description" class="form-label">Deskripsi</label>
+                        <textarea name="description" id="description" rows="4" class="input-field"
+                            placeholder="Jelaskan singkat jenis produk dalam kategori ini...">{{ old('description') }}</textarea>
+                    </div>
                 </div>
-                <p class="mt-2 text-xs text-text/50 dark:text-dark-muted">Ikon Lucide otomatis berdasarkan slug kategori.</p>
+
+                <x-admin.form-aside title="Tampilan">
+                    <div class="admin-icon-preview">
+                        <div class="admin-icon-preview-box">
+                            <i data-lucide="tag" class="h-9 w-9 text-accent dark:text-primary" aria-hidden="true"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-accent dark:text-primary">Ikon Kategori</p>
+                        <p class="mt-1 text-xs text-text/55 dark:text-dark-muted">Ikon Lucide otomatis dari slug</p>
+                    </div>
+
+                    <label
+                        class="flex cursor-pointer items-center gap-3 rounded-xl border border-gold-border/35 bg-white/60 p-4 transition-colors hover:bg-primary/15 dark:border-primary/15 dark:bg-dark-card/60 dark:hover:bg-primary/10">
+                        <input type="checkbox" name="is_active" value="1" checked
+                            class="h-4 w-4 rounded border-gold-border text-primary focus:ring-primary/40">
+                        <span>
+                            <span class="block text-sm font-semibold">Kategori Aktif</span>
+                            <span class="text-xs text-text/55 dark:text-dark-muted">Tampil di katalog toko</span>
+                        </span>
+                    </label>
+
+                    <div class="admin-tip-box">
+                        Gunakan nama kategori yang singkat dan mudah dipahami pelanggan, misalnya Mug, Home Decor, atau Home Living.
+                    </div>
+                </x-admin.form-aside>
             </div>
-            <label class="flex items-center gap-2">
-                <input type="checkbox" name="is_active" value="1" checked class="rounded text-primary focus:ring-primary">
-                <span class="text-sm">Aktif</span>
-            </label>
-            <div class="flex gap-3">
-                <button type="submit" class="btn-accent">Simpan</button>
+
+            <x-admin.form-actions>
+                <button type="submit" class="btn-accent">
+                    <i data-lucide="save" class="h-4 w-4" aria-hidden="true"></i>
+                    Simpan Kategori
+                </button>
                 <a href="{{ route('admin.categories.index') }}" class="btn-secondary">Batal</a>
-            </div>
+            </x-admin.form-actions>
         </form>
-    </div>
-</div>
+    </x-admin.form-page>
 @endsection
