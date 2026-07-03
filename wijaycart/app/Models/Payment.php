@@ -57,7 +57,7 @@ class Payment extends Model
             return null;
         }
 
-        return ImageAssets::storageUrl($this->payment_proof, '');
+        return ImageAssets::url($this->payment_proof);
     }
 
     public function requiresProofUpload(): bool

@@ -6,25 +6,25 @@ Aplikasi **e-commerce lifestyle** berbasis **Laravel 13** dengan nuansa warm min
 
 ## Teknologi
 
-| Layer | Stack |
-|-------|-------|
-| Backend | PHP 8.3, Laravel 13 |
-| Database | MySQL (XAMPP / Laragon / lokal) |
-| Frontend | Blade, Tailwind CSS 4, Flowbite |
+| Layer      | Stack                                  |
+| ---------- | -------------------------------------- |
+| Backend    | PHP 8.3, Laravel 13                    |
+| Database   | MySQL (XAMPP / Laragon / lokal)        |
+| Frontend   | Blade, Tailwind CSS 4, Flowbite        |
 | JavaScript | Vite 8, Lucide Icons, Chart.js (admin) |
 
 ---
 
 ## Requirement
 
-| Komponen | Versi |
-|----------|-------|
-| PHP | 8.3+ |
-| Composer | 2.x |
-| Node.js | 18+ |
-| npm | 9+ |
-| MySQL | 8+ (via XAMPP, Laragon, atau MySQL lokal) |
-| Ekstensi PHP | `gd`, `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `curl` |
+| Komponen     | Versi                                                  |
+| ------------ | ------------------------------------------------------ |
+| PHP          | 8.3+                                                   |
+| Composer     | 2.x                                                    |
+| Node.js      | 18+                                                    |
+| npm          | 9+                                                     |
+| MySQL        | 8+ (via XAMPP, Laragon, atau MySQL lokal)              |
+| Ekstensi PHP | `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `curl` |
 
 ---
 
@@ -77,9 +77,9 @@ Admin panel: **http://localhost:8000/admin**
 
 Setelah `php artisan db:seed` (atau `migrate --seed`):
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@wijaycart.com | password |
+| Role     | Email                  | Password |
+| -------- | ---------------------- | -------- |
+| Admin    | admin@wijaycart.com    | password |
 | Customer | customer@wijaycart.com | password |
 
 ---
@@ -103,6 +103,7 @@ wijaycart/
 ## Fitur Utama
 
 ### Storefront (Customer)
+
 - Katalog produk — search, filter, sort, pagination
 - Keranjang belanja (AJAX)
 - Checkout — COD, transfer bank, QRIS (simulasi)
@@ -114,6 +115,7 @@ wijaycart/
 - Notifikasi in-app & dark mode
 
 ### Admin Panel
+
 - Dashboard & laporan penjualan
 - CRUD kategori & produk (multi-gambar, barcode)
 - Kelola pesanan & pembayaran

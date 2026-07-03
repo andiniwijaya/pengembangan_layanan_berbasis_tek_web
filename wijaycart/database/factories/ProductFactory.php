@@ -36,7 +36,7 @@ class ProductFactory extends Factory
     {
         return $this->afterCreating(function (Product $product) {
             $product->images()->create([
-                'image_path' => ImageAssets::productPath('ceramic-minimalist-mug.webp'),
+                'image_path' => ImageAssets::productPath('ceramic-minimalist-mug.jpg'),
                 'is_primary' => true,
                 'sort_order' => 0,
             ]);

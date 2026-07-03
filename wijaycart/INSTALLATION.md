@@ -6,14 +6,14 @@ Panduan instalasi untuk menjalankan aplikasi **secara lokal** (XAMPP, Laragon, a
 
 ## Persyaratan
 
-| Komponen | Versi |
-|----------|-------|
-| PHP | 8.3+ |
-| Composer | 2.x |
-| Node.js | 18+ |
-| npm | 9+ |
-| MySQL | 8+ |
-| Ekstensi PHP | `gd`, `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `curl` |
+| Komponen     | Versi                                                  |
+| ------------ | ------------------------------------------------------ |
+| PHP          | 8.3+                                                   |
+| Composer     | 2.x                                                    |
+| Node.js      | 18+                                                    |
+| npm          | 9+                                                     |
+| MySQL        | 8+                                                     |
+| Ekstensi PHP | `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `curl` |
 
 **XAMPP / Laragon:** Pastikan Apache (atau `php artisan serve`) dan MySQL sudah berjalan.
 
@@ -98,9 +98,9 @@ php artisan db:seed
 
 ## Akun Demo
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@wijaycart.com | password |
+| Role     | Email                  | Password |
+| -------- | ---------------------- | -------- |
+| Admin    | admin@wijaycart.com    | password |
 | Customer | customer@wijaycart.com | password |
 
 Admin panel: **http://localhost:8000/admin**
@@ -112,9 +112,9 @@ Admin panel: **http://localhost:8000/admin**
 Letakkan foto asli pada folder berikut sebelum menjalankan aplikasi:
 
 ```text
-public/images/banners/       → hero-1.webp, hero-2.webp, hero-3.webp
-public/images/products/      → satu file .webp per produk (lihat database/seeders/data/catalog.php)
-public/images/placeholders/  → product-placeholder.webp, avatar-placeholder.webp
+public/images/banners/       → hero-1.jpg, hero-2.jpg, hero-3.jpg
+public/images/products/      → satu file per produk (lihat database/seeders/data/catalog.php)
+public/images/placeholders/  → product.jpg, avatar.jpg
 ```
 
 Setelah file gambar siap:
@@ -130,12 +130,12 @@ Upload produk baru dari admin panel tetap disimpan di `storage/app/public/produc
 
 ## Troubleshooting
 
-| Masalah | Solusi |
-|---------|--------|
-| Gambar upload tidak tampil | `php artisan storage:link` |
+| Masalah                      | Solusi                                                         |
+| ---------------------------- | -------------------------------------------------------------- |
+| Gambar upload tidak tampil   | `php artisan storage:link`                                     |
 | Error migration / koneksi DB | Pastikan MySQL berjalan; buat database `wijaycart`; cek `.env` |
-| Vite manifest not found | `npm run build` |
-| Port 8000 sudah dipakai | `php artisan serve --port=8001` |
+| Vite manifest not found      | `npm run build`                                                |
+| Port 8000 sudah dipakai      | `php artisan serve --port=8001`                                |
 
 ---
 

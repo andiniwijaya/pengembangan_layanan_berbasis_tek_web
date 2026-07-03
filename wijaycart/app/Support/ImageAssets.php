@@ -4,15 +4,15 @@ namespace App\Support;
 
 final class ImageAssets
 {
-    public const PLACEHOLDER_PRODUCT = 'images/placeholders/product-placeholder.webp';
+    public const PLACEHOLDER_PRODUCT = 'images/placeholders/product.jpg';
 
-    public const PLACEHOLDER_AVATAR = 'images/placeholders/avatar-placeholder.webp';
+    public const PLACEHOLDER_AVATAR = 'images/placeholders/avatar.jpg';
 
-    public const BANNER_HERO_1 = 'images/banners/hero-1.webp';
+    public const BANNER_HERO_1 = 'images/banners/hero-1.jpg';
 
-    public const BANNER_HERO_2 = 'images/banners/hero-2.webp';
+    public const BANNER_HERO_2 = 'images/banners/hero-2.jpg';
 
-    public const BANNER_HERO_3 = 'images/banners/hero-3.webp';
+    public const BANNER_HERO_3 = 'images/banners/hero-3.jpg';
 
     public static function placeholderProduct(): string
     {
@@ -22,17 +22,6 @@ final class ImageAssets
     public static function placeholderAvatar(): string
     {
         return asset(self::PLACEHOLDER_AVATAR);
-    }
-
-    public static function bannerHero(int $number = 1): string
-    {
-        $path = match ($number) {
-            2 => self::BANNER_HERO_2,
-            3 => self::BANNER_HERO_3,
-            default => self::BANNER_HERO_1,
-        };
-
-        return asset($path);
     }
 
     public static function productPath(string $filename): string
@@ -68,11 +57,5 @@ final class ImageAssets
         }
 
         return asset('storage/'.$path);
-    }
-
-    /** @deprecated Use url() */
-    public static function storageUrl(?string $path, string $placeholder): string
-    {
-        return self::url($path, $placeholder);
     }
 }
