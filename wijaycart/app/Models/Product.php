@@ -70,6 +70,11 @@ class Product extends Model
         return $this->status === 'active';
     }
 
+    public function getStatusLabelAttribute(): string
+    {
+        return $this->status === 'active' ? 'Aktif' : 'Nonaktif';
+    }
+
     public function isInStock(): bool
     {
         return $this->stock > 0;

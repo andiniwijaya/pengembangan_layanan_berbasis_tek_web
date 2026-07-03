@@ -58,7 +58,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Selamat datang di WijayCart!');
+        return redirect()->intended(route('dashboard'))->with('success', 'Selamat datang di WijayCart!');
     }
 
     public function logout(Request $request): RedirectResponse

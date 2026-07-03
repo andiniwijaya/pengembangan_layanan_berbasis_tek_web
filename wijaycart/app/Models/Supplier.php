@@ -34,6 +34,6 @@ class Supplier extends Model
 
     public function getStatusLabelAttribute(): string
     {
-        return $this->status === 'active' ? 'Active' : 'Inactive';
+        return $this->status === 'active' ? 'Aktif' : 'Nonaktif';
     }
 }

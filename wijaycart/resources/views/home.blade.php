@@ -1,70 +1,81 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Beranda')
 
 @section('content')
-@include('partials.hero-carousel', ['heroSlides' => $heroSlides])
+    @include('partials.hero-carousel', ['heroSlides' => $heroSlides])
 
-<section class="py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-10 flex items-end justify-between">
-            <div>
-                <h2 class="section-title">Kategori</h2>
-                <p class="mt-2 text-text/60 dark:text-dark-muted">Jelajahi koleksi berdasarkan kategori</p>
+    <section class="py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 flex items-end justify-between">
+                <div>
+                    <h2 class="section-title">Kategori</h2>
+                    <p class="mt-2 text-text/60 dark:text-dark-muted">Jelajahi koleksi berdasarkan kategori</p>
+                </div>
+                <a href="{{ route('products.index') }}"
+                    class="hidden items-center gap-1 text-sm font-medium text-accent hover:underline sm:flex dark:text-primary">
+                    Lihat Semua <i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i>
+                </a>
             </div>
-            <a href="{{ route('products.index') }}" class="hidden items-center gap-1 text-sm font-medium text-accent hover:underline sm:flex dark:text-primary">
-                Lihat Semua <i data-lucide="arrow-right" class="h-4 w-4" aria-hidden="true"></i>
-            </a>
-        </div>
-        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:gap-6">
-            @foreach($categories as $category)
-                @include('partials.category-card', ['category' => $category])
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section class="bg-secondary/50 py-16 dark:bg-dark-card/30">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-10 text-center">
-            <h2 class="section-title">Produk Unggulan</h2>
-            <p class="mt-2 text-text/60 dark:text-dark-muted">Produk pilihan terbaik untuk Anda</p>
-        </div>
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-            @foreach($featuredProducts as $product)
-                @include('partials.product-card', ['product' => $product, 'wishlistIds' => $wishlistIds ?? []])
-            @endforeach
-        </div>
-    </div>
-</section>
-
-<section class="py-16">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-10 flex items-end justify-between">
-            <div>
-                <h2 class="section-title">Produk Terbaru</h2>
-                <p class="mt-2 text-text/60 dark:text-dark-muted">Koleksi terbaru yang baru saja hadir</p>
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:gap-6">
+                @foreach ($categories as $category)
+                    @include('partials.category-card', ['category' => $category])
+                @endforeach
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-            @foreach($latestProducts as $product)
-                @include('partials.product-card', ['product' => $product, 'wishlistIds' => $wishlistIds ?? []])
-            @endforeach
-        </div>
-    </div>
-</section>
+    </section>
 
-<section class="bg-gradient-to-r from-primary/20 to-secondary py-16 dark:from-primary/10 dark:to-dark-card">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-        <i data-lucide="mail" class="mx-auto mb-4 h-10 w-10 text-accent dark:text-primary" aria-hidden="true"></i>
-        <h2 class="mb-3 text-2xl font-bold">Dapatkan Update Terbaru</h2>
-        <p class="mb-6 text-text/60 dark:text-dark-muted">Berlangganan newsletter untuk penawaran eksklusif dan produk baru.</p>
-        <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mx-auto flex max-w-md gap-2" aria-label="Form newsletter">
-            @csrf
-            <label for="newsletter-email" class="sr-only">Email</label>
-            <input id="newsletter-email" type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda" class="input-field flex-1" required>
-            <button type="submit" class="btn-accent shrink-0" aria-label="Berlangganan newsletter">Subscribe</button>
-        </form>
-    </div>
-</section>
+    <section class="bg-secondary/50 py-16 dark:bg-dark-card/30">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 text-center">
+                <h2 class="section-title">Produk Unggulan</h2>
+                <p class="mt-2 text-text/60 dark:text-dark-muted">Produk pilihan terbaik untuk Anda</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+                @foreach ($featuredProducts as $product)
+                    @include('partials.product-card', [
+                        'product' => $product,
+                        'wishlistIds' => $wishlistIds ?? [],
+                    ])
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mb-10 flex items-end justify-between">
+                <div>
+                    <h2 class="section-title">Produk Terbaru</h2>
+                    <p class="mt-2 text-text/60 dark:text-dark-muted">Koleksi terbaru yang baru saja hadir</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+                @foreach ($latestProducts as $product)
+                    @include('partials.product-card', [
+                        'product' => $product,
+                        'wishlistIds' => $wishlistIds ?? [],
+                    ])
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gradient-to-r from-primary/20 to-secondary py-16 dark:from-primary/10 dark:to-dark-card">
+        <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
+            <i data-lucide="mail" class="mx-auto mb-4 h-10 w-10 text-accent dark:text-primary" aria-hidden="true"></i>
+            <h2 class="mb-3 text-2xl font-bold">Dapatkan Update Terbaru</h2>
+            <p class="mb-6 text-text/60 dark:text-dark-muted">Berlangganan newsletter untuk penawaran eksklusif dan produk
+                baru.</p>
+            <form action="{{ route('newsletter.subscribe') }}" method="POST" class="mx-auto flex max-w-md gap-2"
+                aria-label="Form newsletter">
+                @csrf
+                <label for="newsletter-email" class="sr-only">Email</label>
+                <input id="newsletter-email" type="email" name="email" value="{{ old('email') }}"
+                    placeholder="Email Anda" class="input-field flex-1" required>
+                <button type="submit" class="btn-accent shrink-0"
+                    aria-label="Berlangganan newsletter">Berlangganan</button>
+            </form>
+        </div>
+    </section>
 @endsection

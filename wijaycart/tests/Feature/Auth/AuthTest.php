@@ -83,4 +83,27 @@ class AuthTest extends TestCase
     {
         $this->get(route('dashboard'))->assertRedirect(route('login'));
     }
+
+    public function test_guest_is_redirected_to_intended_page_after_login(): void
+    {
+        $user = User::factory()->create(['password' => bcrypt('password')]);
+
+        $this->get(route('checkout.index'))
+            ->assertRedirect(route('login'));
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response->assertRedirect(route('checkout.index'));
+    }
+
+    public function test_admin_user_is_redirected_to_admin_dashboard_when_accessing_customer_dashboard(): void
+    {
+        $admin = User::factory()->admin()->create(['password' => bcrypt('password')]);
+
+        $this->actingAs($admin)->get(route('dashboard'))
+            ->assertRedirect(route('admin.dashboard'));
+    }
 }
